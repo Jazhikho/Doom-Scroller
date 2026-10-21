@@ -1,0 +1,62 @@
+GODOT CODING STANDARDS
+
+PURPOSE
+Build code that is understandable, reusable where appropriate, and easy to work with in the Godot editor. This document is project-neutral. It does not select an engine for an existing project, authorize development, or replace that project's approved design.
+
+1. SCENE-FIRST, EDITOR-MANAGEABLE UI
+Author fixed UI structure, hierarchy, layout, and appearance in Godot scenes (.tscn), themes, and resources. Opening the scene in the editor should let a designer see and adjust the interface without reconstructing it mentally from code.
+
+Use scripts for behavior: signal handling, validation, displaying values, visibility, navigation, interaction, and calls to underlying systems. Do not build a fixed interface entirely through runtime node construction when Godot can represent it as authored scenes.
+
+Use reusable authored scenes for repeated controls, panels, rows, dialogs, and similar components. A variable-length list may instantiate authored row scenes and bind its data at runtime. Dynamic content and genuinely procedural geometry are legitimate uses of code; this is not a blanket ban on runtime instantiation.
+
+Keep styling and fixed layout values in the appropriate scene, theme, or resource rather than scattering them through scripts.
+
+2. PRACTICAL, REUSABLE SYSTEMS
+Prefer small systems with clear responsibilities over tangled, all-purpose manager scripts.
+
+Make reusable systems standalone and game-agnostic where practical. Keep project-specific story, scene coordination, and gameplay glue outside the reusable layer. Dependencies may exist, but their boundaries must be clear; "standalone" does not mean pretending a system has no dependencies.
+
+Reuse or extend an existing suitable system before creating a duplicate. Do not force every small or scene-specific feature into a universal framework. A genre-specific reusable component is useful without claiming to be universal.
+
+Separate configuration/content from behavior where practical. Keep simulation or gameplay rules separate from presentation where that separation improves clarity, reuse, and testing. Make update order explicit when behavior depends on timing.
+
+3. READABILITY AND COMMENTS
+Use readable spacing between functions and logical sections. Avoid dense, compressed code.
+
+Comments should explain intent, assumptions, and non-obvious decisions, not merely repeat the syntax.
+
+For a reusable script or system, explain:
+- What it does and what it owns.
+- When it should be used, and its limits.
+- What the caller must provide or configure.
+- Its dependencies and important lifecycle or timing assumptions.
+- What remains the responsibility of project-specific glue.
+
+Keep names and documentation honest about the scope of a component. Do not label a narrow subsystem as a general-purpose solution.
+
+4. CHANGE AND VALIDATION DISCIPLINE
+When extracting reusable systems or refactoring, preserve existing behavior unless a behavior change is explicitly part of the task.
+
+Inspect existing systems and documentation before proposing an extraction. Identify overlap, what should remain project-specific, risks, and the tests needed to protect the game.
+
+Separate analysis, reusable-system work, validation, and game integration into clear stages. Follow the approval checkpoints agreed for the task rather than treating approval of an audit as approval to rewrite the game.
+
+Validate reusable systems independently where practical, and validate the game behavior after integration. Clearly distinguish a static review from tests actually executed and from hands-on playtesting.
+
+5. PROJECT-SPECIFIC CHOICES
+Use the Godot version, language, dependencies, and naming/formatting conventions established for the target project.
+
+Do not assume C# or GDScript is required for every project. Do not silently upgrade the engine or convert the project between languages.
+
+For a new project, explicitly establish the engine version and language before implementation. This generic document deliberately does not prescribe a universal version, language, test framework, folder tree, line-length limit, or naming scheme.
+
+SUGGESTED ACCEPTANCE CHECKS
+These are practical checks derived from the preferences above, not additional previously agreed universal requirements.
+- Can the fixed UI be opened and adjusted in the Godot editor?
+- Is repeated UI built from editable authored templates?
+- Is runtime construction justified by genuinely dynamic content?
+- Can another developer understand each system's responsibility and dependencies?
+- Do comments explain when and how to use reusable components?
+- Has existing behavior been checked after a refactor?
+- Does the handoff say what was actually tested and what remains unverified?

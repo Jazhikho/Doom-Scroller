@@ -105,3 +105,23 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Local caches and package-manager receipts
+.godot/
+.itch/
+.DS_Store
+Thumbs.db
+
+# Local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+export_credentials.cfg
+
+# Conversation material stays outside version control
+*[Dd][Ii][Ss][Cc][Uu][Ss][Ss][Ii][Oo][Nn]*
+*[Tt][Rr][Aa][Nn][Ss][Cc][Rr][Ii][Pp][Tt]*
